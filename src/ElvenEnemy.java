@@ -147,6 +147,7 @@ public class ElvenEnemy extends ElvenSprite {
     public void move() {
     	
     	if (vis){
+    		
     		if (nextEnemyMissile <= 0){
         		if (elvenEnemyType == 0){
         			
