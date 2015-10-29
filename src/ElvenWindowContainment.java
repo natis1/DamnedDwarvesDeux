@@ -2,12 +2,21 @@
 //package com.zetcode;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
@@ -22,7 +31,7 @@ public class ElvenWindowContainment implements ActionListener {
 	private JFrame myMenuScreen;
 	
 	private Timer timer;
-	private int DELAY = 100;
+	private int DELAY = 2000;
 	
 	private boolean didChangeScreen = false;
 	
@@ -75,7 +84,29 @@ public class ElvenWindowContainment implements ActionListener {
     
     public void goToMainMenu(){
     	
-
+    	File file = new File("elvenshooterTEMP");
+		file.delete();
+		
+		PrintWriter writer;
+		try {
+			writer = new PrintWriter("elvenshooterTEMP", "UTF-8");
+			
+			
+			writer.println("Menu");
+			
+            writer.close();
+            
+			
+		} catch (FileNotFoundException e) {
+			System.out.println(
+	                "Something is seriously wrong with your system");
+			
+		} catch (UnsupportedEncodingException e) {
+			System.out.println(
+	                "You do not have UTF-8? I am seriously amazed");
+		}
+		
+		
     	myBlackScreen.setVisible(false);
     	myBlackScreen.dispose();
     	myGameScreen.setVisible(false);
@@ -106,6 +137,7 @@ public class ElvenWindowContainment implements ActionListener {
     	myGameScreen = new JFrame();
     	myGameScreen.getContentPane().setBackground(Color.BLACK);
     	//set this first
+    	
     	
     	//Get computer screen size
     	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -145,6 +177,9 @@ public class ElvenWindowContainment implements ActionListener {
         
         
         myGameScreen.add(new ElvenBoard(universalScaler));
+        
+        //myGameScreen.
+        
         myGameScreen.setUndecorated(true);
         myGameScreen.setLocation(screenChangeXBy, screenChangeYBy);
 
@@ -201,9 +236,37 @@ public class ElvenWindowContainment implements ActionListener {
 
 @Override
 public void actionPerformed(ActionEvent e) {
+		
+	try {
+        // FileReader reads text files in the default encoding.
+        FileReader fileReader = 
+            new FileReader("elvenshooterTEMP");
+
+        // Always wrap FileReader in BufferedReader.
+        BufferedReader bufferedReader = 
+            new BufferedReader(fileReader);
+
+        
+        if (bufferedReader.readLine().charAt(0) == 'D'){
+        	
+        	goToMainMenu();
+        	
+        }
+        
+        bufferedReader.close();         
+    }
+	catch(FileNotFoundException ex) {
+		//swallow that merde
+		
+	}
+    catch(IOException ex) {
+        System.out.println(
+            "Error reading file because you do not have permissions. Run as Admin to fix.");                  
+        // Or we could just do this: 
+        // ex.printStackTrace();
+    }
+		
 	
-	
-    
 }
 
 }

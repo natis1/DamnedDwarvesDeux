@@ -11,6 +11,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -36,7 +40,7 @@ public class ElvenBoard extends JPanel implements ActionListener {
     
     private boolean didChangeColor = false;
     private boolean is4K;
-    private boolean isGameOver = false;
+    public boolean isGameOver = false;
     private int score = 0;
     
 
@@ -73,6 +77,26 @@ public class ElvenBoard extends JPanel implements ActionListener {
     }
 
     private void initBoard() {
+    	
+    	PrintWriter writer;
+		try {
+			writer = new PrintWriter("elvenshooterTEMP", "UTF-8");
+			
+			
+			writer.println("Still Alive");
+			
+            writer.close();
+            
+			
+		} catch (FileNotFoundException e) {
+			System.out.println(
+	                "Something is seriously wrong with your system");
+			
+		} catch (UnsupportedEncodingException e) {
+			System.out.println(
+	                "You do not have UTF-8? I am seriously amazed");
+		}
+
     	
     	
     	if (universalScaler <= 1.0001){
@@ -252,8 +276,35 @@ Yes I know it is an oversite, whatever.
         	if (!didCreateTheMainMenu){
         		DELAY = 2000;
         		
-        		setBackground(Color.RED);
+        		File file = new File("elvenshooterTEMP");
+        		file.delete();
+        		try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e1) {
+					// Seems ok
+					e1.printStackTrace();
+				}
         		
+            	PrintWriter writer;
+        		try {
+        			writer = new PrintWriter("elvenshooterTEMP", "UTF-8");
+        			
+        			
+        			writer.println("Dead");
+        			
+                    writer.close();
+                    
+        			
+        		} catch (FileNotFoundException e) {
+        			System.out.println(
+        	                "Something is seriously wrong with your system");
+        			
+        		} catch (UnsupportedEncodingException e) {
+        			System.out.println(
+        	                "You do not have UTF-8? I am seriously amazed");
+        		}
+        		
+        		        		
         		didChangeColor = true;
         		didCreateTheMainMenu = true;
         		
