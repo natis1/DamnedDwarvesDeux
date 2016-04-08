@@ -18,7 +18,12 @@ public class ElvenEnemy extends ElvenSprite {
     //All enemies controlled by this class so that they can be in one array though.
     protected int elvenEnemyType;
 
-    private int elvenEnemySpeed;
+    private double elvenEnemySpeed = ElvenBoard.speedMultiplier;
+    
+    private double elvenEnemyYSpeed = 0;
+    
+    
+    private final double speedMultiplier = ElvenBoard.speedMultiplier;
     
     
     public double universalScaler;
@@ -45,7 +50,7 @@ public class ElvenEnemy extends ElvenSprite {
 
 
 
-        super(2000, 0, -Math.PI/2, 50, "Images/elvenelf1.png");
+        super(2000, 0, -Math.PI/2, 50, "elvenelf1.png");
         universalScaler = scaler;
         
         initEnemy(elvenActionToTake);
@@ -65,34 +70,67 @@ public class ElvenEnemy extends ElvenSprite {
     	
         //So many possibilites. We need one for every y co-ord and every elvenEnemyType
         //One day this will take advantage of the size of the screen, but I am a bad programmer
-    	int realElvenAction = (int) elvenActionToTake % 4320;
+    	
+    	int difficulty = ElvenMain.ElvenGameDifficulty;
+    	if (difficulty > 9) difficulty = 9;
+    	int realElvenAction = (int) elvenActionToTake % (1080 * (difficulty + 1));//no divide by zero here officer
 
         //0 - ? possible
         elvenEnemyType = realElvenAction / 1080;
-        elvenEnemySpeed = 10;
+        elvenEnemySpeed = ElvenBoard.speedMultiplier * (10  + (ElvenMain.ElvenGameDifficulty / 4));
         
         if (elvenEnemyType < 0){
         	elvenEnemyType = 0 - elvenEnemyType;
         }
+        switch (elvenEnemyType) {
+        case 0: this.image_file = "e1.png";
+    	elvenEnemySpeed = ElvenBoard.speedMultiplier * (8  + (ElvenMain.ElvenGameDifficulty / 4));
+    	break;
+    	
+        case 1: this.image_file = "e2.png";
+    	elvenEnemySpeed = ElvenBoard.speedMultiplier * (5  + (ElvenMain.ElvenGameDifficulty / 4));
+    	break;
+    	
+        case 2:
+        break;
+    	
+        case 3: this.image_file = "asteroid.png";
+    	EnemyHP = 50000;
+    	elvenEnemySpeed = ElvenBoard.speedMultiplier * (5  + (ElvenMain.ElvenGameDifficulty / 4));
+    	break;
         
-        if (elvenEnemyType == 0){
-        	this.image_file = "Images/e1.png";
-        	elvenEnemySpeed = 8;
-        	
-        	
-        	
-        } else if (elvenEnemyType == 1){
-        	this.image_file = "Images/e2.png";
-        	elvenEnemySpeed = 5;
-        } else if (elvenEnemyType == 2){
-        	this.image_file = "Images/asteroid.png";
-        	EnemyHP = 50000;
-        	elvenEnemySpeed = 5;
-        } else {
-        	elvenEnemyType = -1;
+        case 4: this.image_file = "e1.png";
+    	elvenEnemyYSpeed = ElvenBoard.speedMultiplier * (3  + (ElvenMain.ElvenGameDifficulty / 4));
+    	elvenEnemySpeed = ElvenBoard.speedMultiplier * 4;
+    	break;
+    	
+        case 5: this.image_file = "e2.png";
+    	elvenEnemyYSpeed = ElvenBoard.speedMultiplier * (1  + (ElvenMain.ElvenGameDifficulty / 4));
+    	elvenEnemySpeed = ElvenBoard.speedMultiplier * 4;
+    	break;
+    	
+        case 6:
+        elvenEnemySpeed = ElvenBoard.speedMultiplier * 5;
+        break;
+    	
+        case 7: this.image_file = "e1.png";
+    	elvenEnemyYSpeed = ElvenBoard.speedMultiplier * (3  + (ElvenMain.ElvenGameDifficulty / 4));
+    	elvenEnemySpeed = ElvenBoard.speedMultiplier * 5;
+    	break;
+    	
+        case 8: this.image_file = "e2.png";
+    	elvenEnemyYSpeed = ElvenBoard.speedMultiplier * (1  + (ElvenMain.ElvenGameDifficulty / 4));
+    	elvenEnemySpeed = ElvenBoard.speedMultiplier * 5;
+    	break;
+        
+        
+        
         }
+        
+        
+        
 
-        //Get the y value
+        //Get the y or x value
         realElvenAction = realElvenAction % 1080;
         if (realElvenAction < 0){
         	realElvenAction = 0 - realElvenAction;
@@ -104,17 +142,40 @@ public class ElvenEnemy extends ElvenSprite {
         if (realElvenAction < 0){
         	realElvenAction = 0;
         }
-        	realElvenAction = (int) (realElvenAction * universalScaler);
-
+        
+        
         //Y should be determined by this point
         //DONE
-    	y = realElvenAction;
+        
+        if (elvenEnemyType < 4) {
+        	y = realElvenAction;
+        } else {
+        	if (realElvenAction > 540){
+        		y = -100;
+        		x = 1860 - (realElvenAction - 540);
+        		
+        	} else {
+        		y = 1100;
+        		x = 1860 - (realElvenAction);
+        		elvenEnemyYSpeed = 0 - elvenEnemyYSpeed;
+        		
+        	}
+        }
+    	
     	
     	realy = y;
     	realx = x;
     	
     	
-    	EnemyHP = 5;
+    	EnemyHP = 5 + ElvenMain.ElvenGameDifficulty;
+    	if (elvenEnemyType == 3){
+    		EnemyHP = 10000;
+    	}
+    	
+    	//when compiling for real, comment this
+    	//TODO: UNCOMMENT WHEN RUNNING IN SIM
+    	this.image_file = "Images\\" + this.image_file;
+    	
     	loadImage(); 
     }
     
@@ -122,22 +183,21 @@ public class ElvenEnemy extends ElvenSprite {
     	EnemyHP--;
         if (EnemyHP < 1) {
         	
+        	vis = false;
         	
-    		if (elvenEnemyType == 0){
-    			vis = false;
-    			return 50;
-    		}
-    		if (elvenEnemyType == 1){
-    			vis = false;
-    			return 100;
-    		}
-    		if (elvenEnemyType == -1){
-    			vis = false;
-    			return 300;
-    		}
-            
-    		
-        } else {
+        	switch (elvenEnemyType) {
+            case 0: return 50 * (1 + (ElvenMain.ElvenGameDifficulty / 4));
+        	case 1: return 100 * (1 + (ElvenMain.ElvenGameDifficulty / 2));
+            case 2: return 150 * (1 + (ElvenMain.ElvenGameDifficulty / 2));
+            case 3: return 0;
+            case 4: return 50 * (1 + (ElvenMain.ElvenGameDifficulty / 4));
+            case 5: return 100 * (1 + (ElvenMain.ElvenGameDifficulty / 2));
+            case 6: return 150 * (1 + (ElvenMain.ElvenGameDifficulty / 2));
+            case 7: return 50 * (1 + (ElvenMain.ElvenGameDifficulty / 4));
+            case 8: return 100 * (1 + (ElvenMain.ElvenGameDifficulty / 2));
+        }
+        }
+        	else {
         	return 1;
         }
 		return 0;
@@ -149,29 +209,29 @@ public class ElvenEnemy extends ElvenSprite {
     	if (vis){
     		
     		if (nextEnemyMissile <= 0){
-        		if (elvenEnemyType == 0){
+        		if (elvenEnemyType == 0 || elvenEnemyType == 4 || elvenEnemyType == 7){
         			
         			elvenEnemyMissiles.add(new ElvenEnemyMissile( x, 
-            				y + height/2, this.angle, "Images/ElvenEnemyBullet0.png"));
+            				y + height/2, this.angle, "ElvenEnemyBullet0.png"));
         			
         			//Reset based on enemy type
-        			nextEnemyMissile = 70;
+        			nextEnemyMissile = (int) ((70 - (ElvenMain.ElvenGameDifficulty * 2)) / speedMultiplier);
         		}
-        		if (elvenEnemyType == 1){
+        		if (elvenEnemyType == 1 || elvenEnemyType == 5 || elvenEnemyType == 8){
         			
         			elvenEnemyMissiles.add(new ElvenEnemyMissile( x, 
-            				y + height/2, this.angle, "Images/ElvenEnemyBullet0.png"));
+            				y + height/2, this.angle, "ElvenEnemyBullet0.png"));
         			
         			//Reset based on enemy type
-        			nextEnemyMissile = 30;
+        			nextEnemyMissile = (int) ((30  - (ElvenMain.ElvenGameDifficulty)) / speedMultiplier);
         		}
-        		if (elvenEnemyType == -1){
+        		if (elvenEnemyType == 6 || elvenEnemyType == 2){
         			
         			elvenEnemyMissiles.add(new ElvenEnemyMissile( x, 
-            				y + height/2, this.angle, "Images/ElvenEnemyBullet0.png"));
+            				y + height/2, this.angle, "ElvenEnemyBullet0.png"));
         			
         			//Reset based on enemy type
-        			nextEnemyMissile = 120;
+        			nextEnemyMissile = (int) ((120  - (ElvenMain.ElvenGameDifficulty * 3)) / speedMultiplier);
         		}
         		
         		
@@ -182,6 +242,7 @@ public class ElvenEnemy extends ElvenSprite {
         	
             
             realx -= elvenEnemySpeed;
+            realy += elvenEnemyYSpeed;
             if (realx < BOARD_WIDTH) {
                 vis = false;
             }

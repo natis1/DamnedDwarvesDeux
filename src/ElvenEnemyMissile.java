@@ -8,8 +8,11 @@ import java.awt.Rectangle;
 public class ElvenEnemyMissile extends ElvenSprite {
 
     private final int BOARD_WIDTH = -50;
-    private final int MISSILE_SPEED = 6;
+    private final double MISSILE_SPEED = (6 + ElvenMain.ElvenGameDifficulty) * ElvenBoard.speedMultiplier;
     //private double angle;
+    
+    private float realy;
+    private float realx;
     
 
     public ElvenEnemyMissile(int x, int y, double angle, String image_file) {
@@ -17,6 +20,9 @@ public class ElvenEnemyMissile extends ElvenSprite {
     	
     	
         super(x, y, angle, 10, image_file);
+        realy= y;
+        realx= x;
+        
         
         //x += (int)10*Math.cos(angle);
         //y += (int)10*Math.sin(angle);
@@ -48,8 +54,11 @@ public class ElvenEnemyMissile extends ElvenSprite {
 		
         	this.angle = angle + Math.PI;
         	
-            x += Math.cos(this.angle) * MISSILE_SPEED;
-            y += Math.sin(this.angle) * MISSILE_SPEED /2;
+            realx += Math.cos(this.angle) * MISSILE_SPEED;
+            realy += Math.sin(this.angle) * MISSILE_SPEED /2;
+            x = (int) realx;
+            y = (int) realy;
+            
             
             //x -= 4;
 
@@ -62,7 +71,8 @@ public class ElvenEnemyMissile extends ElvenSprite {
 
     public void move() {
         
-    	x -= MISSILE_SPEED;
+    	realx -= MISSILE_SPEED;
+    	x = (int) realx;
         if (x < BOARD_WIDTH) {
             vis = false;
         }

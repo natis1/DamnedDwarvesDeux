@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class ElvenPixAlly extends ElvenSprite {
 	
     private int fireDelay;
+    private int fireStop = (int) (ElvenMain.ElvenUpgradeFirerate);
     
     private float realx;
     private float realy;
@@ -18,8 +19,7 @@ public class ElvenPixAlly extends ElvenSprite {
     public ElvenPixAlly(int x, int y, double angle, String image_file) {
     	
     	
-        super(x, y, Math.PI/2, 20, "Images/elvenFae.png");
-        
+        super(x, y, Math.PI/2, 20, "elvenFae.png");
         
         
         initAlly();
@@ -39,7 +39,7 @@ public class ElvenPixAlly extends ElvenSprite {
     
     public void move(int ex, int ey, double angleUsed) {
     
-    	//Doing this instead of casting because reasons
+    	
     	float tempx = realx;
     	float tempy = realy;
     	float tempEX = ex;
@@ -61,10 +61,10 @@ public class ElvenPixAlly extends ElvenSprite {
     public void fire() {
     	if (fireDelay < 0){
     		
-    		Elvenmissiles.add(new ElvenMissile( x + width * 3/4 + (int)(30 * Math.cos(this.angle)), 
+    		Elvenmissiles.add(new ElvenMissile( (x + width * 3/4 ), 
     				y + height/2 , 
-    				0, "Images/elvenarrow.gif"));
-    		fireDelay = 3;
+    				0, "elvenarrow.gif"));
+    		fireDelay = 4 - fireStop / 5;
     	}
     	fireDelay--;
         

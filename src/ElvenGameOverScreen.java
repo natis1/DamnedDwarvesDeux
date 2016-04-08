@@ -10,7 +10,7 @@ public class ElvenGameOverScreen extends ElvenSprite {
     public ElvenGameOverScreen() {
     	
     	
-        super(0, 0, 0, 2000, "Images/elvenGameover.png");
+        super(0, 0, 0, 2000, "elvenGameover.png");
         loadImage();
     }
     
