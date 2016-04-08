@@ -94,8 +94,6 @@ public class ElvenBoard extends JPanel {
 
 
 
-		new DwarvenAbathur(this);
-
     	//100% working on every multiple of 60, everything exept background works perfectly on any other number.
         initBoard();
         

@@ -1,5 +1,3 @@
-//import java.awt.Rectangle;
-//import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 //Act with wisdom, but act.
 
