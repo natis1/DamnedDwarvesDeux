@@ -1,5 +1,7 @@
 //package com.zetcode;
 
+import org.w3c.dom.css.Rect;
+
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
@@ -796,6 +798,20 @@ Yes I know it is an oversite, whatever.
 			}
 		}
 		return bullets;
+	}
+
+	public ArrayList<Rectangle> getEnemyCollisions() {
+		ArrayList<Rectangle> enemies = new ArrayList<Rectangle>();
+
+		for (int e = 0; e < Elvenenemies.size(); e++){
+			enemies.add(new Rectangle(Elvenenemies.get(e).getX(), Elvenenemies.get(e).getY(),
+					Elvenenemies.get(e).getWidth(), Elvenenemies.get(e).getHeight()));
+		}
+		return enemies;
+	}
+
+	public Rectangle getShipCollisionRadius() {
+		return new Rectangle(craft.getX(), craft.getY(), craft.getWidth(), craft.getHeight());
 	}
     
     

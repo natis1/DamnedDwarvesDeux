@@ -121,11 +121,8 @@ public class ElvenWindowContainment implements ActionListener {
 
 		myGameScreen.setVisible(false);
 		myGameScreen.dispose();
-    	/*
 
-    	
-    	
-    	
+    	/*
     		myMenuScreen = new JFrame();
             myMenuScreen.add(new ElvenMainMenu(score));
         	
@@ -307,32 +304,27 @@ public class ElvenWindowContainment implements ActionListener {
             	screenChangeXBy = -(int) ((screenHeight * ( 16.0 / 9.0) - screenWidth) / 2);
             	
             	screenWidth = screenHeight * ( 16.0 / 9.0);
-            	
+
             	universalScaler = screenHeight / 1080.0;
-            	
+
             }
-            
-            
+
+
     	} else {
     		screenHeight = ElvenMain.ElvenYResolution;
     		screenWidth = screenHeight * 16.0 / 9.0;
     		universalScaler = screenHeight / 1080.0;
-    		
-    		
-    		
-    		
-    		
     		myGameScreen.setUndecorated(false);
             myGameScreen.setResizable(false); //windowed
-    		
+
     	}
-        
-        
-        
-        
+
+
+
+
         //monitor is less than 16:9
-        
-    	
+
+
     	//panel.setLayout(new FlowLayout(FlowLayout.LEFT));
         
         

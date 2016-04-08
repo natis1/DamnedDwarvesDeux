@@ -2,7 +2,7 @@ import java.util.ArrayList;
 //Act with wisdom, but act.
 
 public class ElvenPixAlly extends ElvenSprite {
-	
+
     private int fireDelay;
     private int fireStop = (int) (ElvenMain.ElvenUpgradeFirerate);
     
