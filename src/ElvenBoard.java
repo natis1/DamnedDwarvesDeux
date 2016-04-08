@@ -91,7 +91,11 @@ public class ElvenBoard extends JPanel {
     	TIME_BETWEEN_UPDATES = 1000000000 / computerHZ;
     	//testing only
     	speedMultiplier = (double) (60) / (double) computerHZ; //designed for 60, compensates for everything else.
-    	
+
+
+
+		new DwarvenAbathur(this);
+
     	//100% working on every multiple of 60, everything exept background works perfectly on any other number.
         initBoard();
         
@@ -489,8 +493,7 @@ Yes I know it is an oversite, whatever.
     }
     
 	//Starts a new thread and runs the game loop in it.
-	public void runGameLoop()
-	{
+	public void runGameLoop() {
 		Thread loop = new Thread()
 		{
 			public void run()
@@ -500,9 +503,9 @@ Yes I know it is an oversite, whatever.
 		};
 		loop.start();
 	}
+
     
-	public void gameLoop() 
-	{
+	public void gameLoop() {
 		//This value would probably be stored elsewhere.
 		
 		
@@ -597,8 +600,7 @@ Yes I know it is an oversite, whatever.
 		}
 	
 
-	private void drawGame(float interpolation)
-	{
+	private void drawGame(float interpolation) {
 		
 		repaint();
 		frameCount++;
@@ -780,6 +782,23 @@ Yes I know it is an oversite, whatever.
     	
 
     }
+
+
+
+
+
+	public ArrayList<Rectangle> getAllBulletCollisions() {
+		ArrayList bullets = new ArrayList<Rectangle>();
+
+		for (int e = 0; e < Elvenenemies.size(); e++){
+			ElvenEnemy ee = Elvenenemies.get(e);
+			for (int e2 = 0; e2 < ee.elvenEnemyMissiles.size(); e2++){
+				bullets.add(new Rectangle(ee.elvenEnemyMissiles.get(e2).x, ee.elvenEnemyMissiles.get(e2).y,
+						ee.elvenEnemyMissiles.get(e2).width, ee.elvenEnemyMissiles.get(e2).height));
+			}
+		}
+		return bullets;
+	}
     
     
     

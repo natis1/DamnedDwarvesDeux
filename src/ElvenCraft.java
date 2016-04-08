@@ -93,6 +93,12 @@ public class ElvenCraft extends ElvenSprite {
 
 		delayShot--;
 
+		if (delayShot < 0){// I am so good at casting they call me a wizard
+			delayShot = (int) ((double) (30 - ElvenMain.ElvenUpgradeFirerate) / (speedMultiplier));
+			pixieHelper.fire();
+		}
+
+
 		shieldRegenTimer++;
 		if (shieldRegenTimer > ((30 - (maxCraftShields/50)))/(speedMultiplier) && craftShields < maxCraftShields){
 			craftShields++;
@@ -300,14 +306,7 @@ public class ElvenCraft extends ElvenSprite {
 			
 		}
 		
-		if (delayShot < 0){// I am so good at casting they call me a wizard
-			delayShot = (int) ((double) (30 - ElvenMain.ElvenUpgradeFirerate) / (speedMultiplier));
-			
-			
 
-			pixieHelper.fire();
-
-		}
 
 	}
 
