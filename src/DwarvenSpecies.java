@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Dictionary;
+import java.util.HashMap;
 
 
 public class DwarvenSpecies {
@@ -11,7 +12,7 @@ public class DwarvenSpecies {
 
 
 
-    static Dictionary GENETIC_CODE;
+    private HashMap GENETIC_CODE;
 
     private int[][] relativeEnemyLocations;
 
@@ -21,7 +22,7 @@ public class DwarvenSpecies {
 
 
 
-    public DwarvenSpecies(Dictionary genes){
+    public DwarvenSpecies(HashMap genes){
         GENETIC_CODE = genes;
 
 
@@ -44,18 +45,36 @@ public class DwarvenSpecies {
         for (int i = 0; i < 5; i++){
             keysPressed[i] = false;
         }
-        int shouldGoLeft = (GENETIC_CODE.get(left_nearestEnemyYBenefit))
+        int shouldGoLeft = (int)(((double) GENETIC_CODE.get("left_nearestEnemyY") * (double) nearestEnemyRelativeYPosition )
+                + ((double) GENETIC_CODE.get("left_nearestEnemyHealth") * (double) nearestEnemyHealth)
+                + ((double) GENETIC_CODE.get("left_pixTimer") * (double) pixTimer));
+        if (shouldGoLeft > 0) pushLeft();
 
+        int shouldGoUp = (int)(((double) GENETIC_CODE.get("up_nearestEnemyY") * (double) nearestEnemyRelativeYPosition )
+                + ((double) GENETIC_CODE.get("up_nearestEnemyHealth") * (double) nearestEnemyHealth)
+                + ((double) GENETIC_CODE.get("up_pixTimer") * (double) pixTimer));
+        if (shouldGoUp > 0) pushUp();
 
+        int shouldGoRight = (int)(((double) GENETIC_CODE.get("right_nearestEnemyY") * (double) nearestEnemyRelativeYPosition )
+                + ((double) GENETIC_CODE.get("right_nearestEnemyHealth") * (double) nearestEnemyHealth)
+                + ((double) GENETIC_CODE.get("right_pixTimer") * (double) pixTimer));
+        if (shouldGoRight > 0) pushRight();
+
+        int shouldGoDown = (int)(((double) GENETIC_CODE.get("down_nearestEnemyY") * (double) nearestEnemyRelativeYPosition )
+                + ((double) GENETIC_CODE.get("down_nearestEnemyHealth") * (double) nearestEnemyHealth)
+                + ((double) GENETIC_CODE.get("down_pixTimer") * (double) pixTimer));
+        if (shouldGoDown > 0) pushDown();
+
+        int shouldShoot = (int)(((double) GENETIC_CODE.get("shoot_nearestEnemyY") * (double) nearestEnemyRelativeYPosition )
+                + ((double) GENETIC_CODE.get("shoot_nearestEnemyHealth") * (double) nearestEnemyHealth)
+                + ((double) GENETIC_CODE.get("shoot_pixTimer") * (double) pixTimer));
+        if (shouldShoot > 0) shoot();
 
 
     }
 
     private void pushLeft(){
         keysPressed[0] = true;
-
-
-
 
     }
     private void pushRight(){
