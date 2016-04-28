@@ -1,21 +1,18 @@
 import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.Enumeration;
 import java.util.HashMap;
 
 public class DwarvenAbathur {
 
 
-    private ArrayList<HashMap> speciesDatabase = new ArrayList<HashMap>();
-
-
-    public ArrayList<DwarvenSpecies> livingCreatures = new ArrayList<DwarvenSpecies>();
+    private ArrayList<HashMap<String, Object>> speciesDatabase = new ArrayList<>();
+    public DwarvenSpecies livingCreature;
 
     protected DwarvenAbathur() {
 
 
+        loadSpeciesDatabase();
 
-         livingCreatures.add(new DwarvenSpecies(speciesDatabase.get(0)));
+        livingCreature = new DwarvenSpecies(speciesDatabase.get(0));
 
 
     }
@@ -24,7 +21,7 @@ public class DwarvenAbathur {
     private void loadSpeciesDatabase() {
 
 
-        HashMap species = new HashMap();
+        HashMap<String, Object> species = new HashMap<String, Object>();
 
         species.put("name", "voidling");
         species.put("fitness", 0);

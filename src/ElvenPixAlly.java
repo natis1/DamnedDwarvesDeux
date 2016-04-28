@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class ElvenPixAlly extends ElvenSprite {
 
-    private int fireDelay;
+    public int fireDelay;
     private int fireStop = (int) (ElvenMain.ElvenUpgradeFirerate);
     
     private float realx;

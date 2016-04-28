@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class ElvenCraft extends ElvenSprite {
 
-	private ElvenKeyManager keySetter = new ElvenKeyManager();
+	public ElvenKeyManager keySetter = new ElvenKeyManager();
 
 
 	private float dx;

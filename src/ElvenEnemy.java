@@ -59,7 +59,7 @@ public class ElvenEnemy extends ElvenSprite {
         //Eh good enough
 	private final int BOARD_WIDTH = -200;
     
-	private int EnemyHP;
+	private int enemyHP;
     
     
     private void initEnemy(long elvenActionToTake) {
@@ -95,7 +95,7 @@ public class ElvenEnemy extends ElvenSprite {
         break;
     	
         case 3: this.image_file = "asteroid.png";
-    	EnemyHP = 50000;
+    	enemyHP = 50000;
     	elvenEnemySpeed = ElvenBoard.speedMultiplier * (5  + (ElvenMain.ElvenGameDifficulty / 4));
     	break;
         
@@ -167,9 +167,9 @@ public class ElvenEnemy extends ElvenSprite {
     	realx = x;
     	
     	
-    	EnemyHP = 5 + ElvenMain.ElvenGameDifficulty;
+    	enemyHP = 5 + ElvenMain.ElvenGameDifficulty;
     	if (elvenEnemyType == 3){
-    		EnemyHP = 10000;
+    		enemyHP = 10000;
     	}
     	
     	//when compiling for real, comment this
@@ -180,8 +180,8 @@ public class ElvenEnemy extends ElvenSprite {
     }
     
     public int hit(){
-    	EnemyHP--;
-        if (EnemyHP < 1) {
+    	enemyHP--;
+        if (enemyHP < 1) {
         	
         	vis = false;
         	
@@ -201,6 +201,10 @@ public class ElvenEnemy extends ElvenSprite {
         	return 1;
         }
 		return 0;
+    }
+
+    public int getEnemyHP(){
+        return enemyHP;
     }
 
 

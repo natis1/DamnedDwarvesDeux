@@ -28,8 +28,7 @@ public class DwarvenSpecies {
 
     }
 
-    public void setGameVariablesAndRun(int[][] relativeEnemyLocations, ArrayList<Integer> variables){
-        this.relativeEnemyLocations = relativeEnemyLocations;
+    public void setGameVariablesAndRun(ArrayList<Integer> variables){
         nearestEnemyRelativeYPosition = variables.get(0);
         nearestEnemyHealth = variables.get(1);
         pixTimer = variables.get(2);
@@ -41,7 +40,7 @@ public class DwarvenSpecies {
     }
 
 
-    public void runProgram(){
+    private void runProgram(){
         for (int i = 0; i < 5; i++){
             keysPressed[i] = false;
         }
@@ -74,25 +73,25 @@ public class DwarvenSpecies {
     }
 
     private void pushLeft(){
-        keysPressed[0] = true;
-
-    }
-    private void pushRight(){
-        keysPressed[1] = true;
-
-    }
-    private void pushUp(){
         keysPressed[2] = true;
 
     }
-    private void pushDown(){
+    private void pushRight(){
         keysPressed[3] = true;
+
+    }
+    private void pushUp(){
+        keysPressed[1] = true;
+
+    }
+    private void pushDown(){
+        keysPressed[4] = true;
 
 
     }
 
     private void shoot(){
-        keysPressed[4] = true;
+        keysPressed[0] = true;
 
     }
 
